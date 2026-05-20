@@ -15,14 +15,26 @@ export default function App() {
 
   const URL = "https://script.google.com/macros/s/AKfycby_yxCgYVuRu2iPg7VprE86yovYDoNp7JW3ZC56zeCuoLKNmerdvHxYeDeg50fs5O9I/exec";
 
-  const botonStyle = {
+  const botonSi = {
     backgroundColor: "#f8a5c2",
     color: "#fff",
     border: "none",
     borderRadius: "25px",
     padding: "12px 24px",
-    margin: "8px",
-    cursor: "pointer"
+    margin: "10px",
+    cursor: "pointer",
+    fontSize: "16px"
+  };
+
+  const botonNo = {
+    backgroundColor: "#d8a5b3",
+    color: "#fff",
+    border: "none",
+    borderRadius: "25px",
+    padding: "12px 24px",
+    margin: "10px",
+    cursor: "pointer",
+    fontSize: "16px"
   };
 
   return (
@@ -30,7 +42,8 @@ export default function App() {
       textAlign: "center",
       padding: "30px",
       minHeight: "100vh",
-      background: "linear-gradient(to right, #fff1eb, #fcd5ce)"
+      background: "linear-gradient(to right, #fff1eb, #fcd5ce)",
+      fontFamily: "'Segoe UI', sans-serif"
     }}>
 
       <h1 style={{ color: "#b5838d" }}>🎉 Feliz Cumpleaños 🎉</h1>
@@ -40,7 +53,7 @@ export default function App() {
         <>
           <p>Hoy tengo algo especial para ti 💖</p>
 
-          <button style={botonStyle} onClick={() => setEtapa(1)}>
+          <button style={botonSi} onClick={() => setEtapa(1)}>
             Ver sorpresa ✨
           </button>
         </>
@@ -51,37 +64,39 @@ export default function App() {
         <>
           <h2>¿Quieres aceptar este regalo? 🎁</h2>
 
-          {/* BOTÓN SI */}
-          <button
-            style={botonStyle}
-            onClick={() => {
-              fetch(URL, {
-                method: "POST",
-                body: JSON.stringify({ respuesta: "SI" })
-              });
+          <div>
+            {/* BOTÓN SI */}
+            <button
+              style={botonSi}
+              onClick={() => {
+                fetch(URL, {
+                  method: "POST",
+                  body: JSON.stringify({ respuesta: "SI" })
+                });
 
-              setAcepto(true);
-              setEtapa(2);
-            }}
-          >
-            Sí 💖
-          </button>
+                setAcepto(true);
+                setEtapa(2);
+              }}
+            >
+              Sí 💖
+            </button>
 
-          {/* BOTÓN NO */}
-          <button
-            style={botonStyle}
-            onClick={() => {
-              fetch(URL, {
-                method: "POST",
-                body: JSON.stringify({ respuesta: "NO" })
-              });
+            {/* BOTÓN NO */}
+            <button
+              style={botonNo}
+              onClick={() => {
+                fetch(URL, {
+                  method: "POST",
+                  body: JSON.stringify({ respuesta: "NO" })
+                });
 
-              setAcepto(false);
-              setEtapa(3);
-            }}
-          >
-            No 😏
-          </button>
+                setAcepto(false);
+                setEtapa(3);
+              }}
+            >
+              No 😏
+            </button>
+          </div>
         </>
       )}
 
@@ -92,8 +107,8 @@ export default function App() {
 
           <p>Entonces me quedo con todos los regalos 😂</p>
 
-          <button style={botonStyle} onClick={() => setEtapa(2)}>
-            Igual quiero verlos 👀
+          <button style={botonSi} onClick={() => setEtapa(2)}>
+            Ok, quiero verlos 👀
           </button>
         </>
       )}
@@ -106,7 +121,7 @@ export default function App() {
           {opciones.map((o, i) => (
             <div key={i}>
               <button
-                style={botonStyle}
+                style={botonSi}
                 onClick={() => {
                   setRegalo(i);
                   setEtapa(4);
@@ -128,7 +143,11 @@ export default function App() {
             Elegiste: <strong>{opciones[regalo]}</strong>
           </p>
 
-          <p style={{ marginTop: "20px", fontWeight: "bold" }}>
+          <p style={{
+            marginTop: "20px",
+            fontWeight: "bold",
+            color: "#b5838d"
+          }}>
             💖 Todos los regalos son para ti 💖
           </p>
 
@@ -137,7 +156,6 @@ export default function App() {
           </p>
         </>
       )}
-
     </div>
   );
 }
