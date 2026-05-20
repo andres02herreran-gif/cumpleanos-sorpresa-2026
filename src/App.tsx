@@ -24,11 +24,11 @@ export default function App() {
     fontSize: "16px"
   };
 
-  // 🎉 activar confeti cuando llega al final
+  // 🎆 Activar efectos al final
   useEffect(() => {
     if (etapa === 3) {
       setShowConfeti(true);
-      setTimeout(() => setShowConfeti(false), 4000);
+      setTimeout(() => setShowConfeti(false), 5000);
     }
   }, [etapa]);
 
@@ -43,40 +43,78 @@ export default function App() {
     }}>
       <h1>🎉 Feliz Cumpleaños 🎉</h1>
 
-      {/* 🎉 CONFETI */}
+      {/* 🎉 CONFETI + ✨ FUEGOS */}
       {showConfeti && (
-        <div style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-          overflow: "hidden"
-        }}>
-          {Array.from({ length: 80 }).map((_, i) => (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                top: "-10px",
-                left: Math.random() * 100 + "%",
-                width: "8px",
-                height: "8px",
-                backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`,
-                animation: `fall ${Math.random() * 2 + 2}s linear infinite`
-              }}
-            />
-          ))}
-        </div>
+        <>
+          {/* Confeti */}
+          <div style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none"
+          }}>
+            {Array.from({ length: 80 }).map((_, i) => (
+              <div
+                key={"confeti" + i}
+                style={{
+                  position: "absolute",
+                  top: "-10px",
+                  left: Math.random() * 100 + "%",
+                  width: "8px",
+                  height: "8px",
+                  backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                  animation: `fall ${Math.random() * 3 + 2}s linear infinite`
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Fuegos artificiales */}
+          <div style={{
+            position: "fixed",
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none"
+          }}>
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div
+                key={"fire" + i}
+                style={{
+                  position: "absolute",
+                  top: Math.random() * 80 + "%",
+                  left: Math.random() * 90 + "%",
+                  width: "10px",
+                  height: "10px",
+                  borderRadius: "50%",
+                  backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                  animation: `explode 1s ease-out forwards`,
+                  animationDelay: `${Math.random() * 2}s`
+                }}
+              />
+            ))}
+          </div>
+        </>
       )}
 
-      {/* 🎨 ANIMACIÓN */}
+      {/* Animaciones */}
       <style>
         {`
           @keyframes fall {
             0% { transform: translateY(0px); }
             100% { transform: translateY(100vh); }
+          }
+
+          @keyframes explode {
+            0% {
+              transform: scale(0.5);
+              opacity: 1;
+            }
+            100% {
+              transform: scale(3);
+              opacity: 0;
+            }
           }
         `}
       </style>
@@ -148,10 +186,6 @@ export default function App() {
             💖 El mejor regalo es compartir tiempo contigo 💖
           </p>
 
-          <p style={{ marginTop: "10px" }}>
-            Todas las opciones son tuyas 😏🎁
-          </p>
-
           <ul style={{ textAlign: "left", maxWidth: "300px", margin: "auto" }}>
             {opciones.map((o, i) => (
               <li key={i}>🎁 {o}</li>
@@ -159,7 +193,7 @@ export default function App() {
           </ul>
 
           <h2 style={{ marginTop: "25px" }}>
-            🎉 Feliz cumpleaños 🎉
+            🎆 Feliz cumpleaños 🎆
           </h2>
         </>
       )}
