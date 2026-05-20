@@ -18,7 +18,11 @@ export default function App() {
 
       {etapa === 0 && (
         <>
-          <p>Hoy celebramos tu vida 💖</p>
+          <p>
+          Hoy celebramos una persona increíble… 🌟  
+          Gracias por existir, por cada sonrisa y cada momento.  
+          Este es solo un pequeño detalle para recordarte lo especial que eres 💖
+          </p>
 
           <img src="https://picsum.photos/200" />
           <img src="https://picsum.photos/201" />
