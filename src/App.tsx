@@ -1,8 +1,12 @@
 import { useState } from "react";
 
 export default function App() {
+  const [codigo, setCodigo] = useState("");
+  const [acceso, setAcceso] = useState(false);
   const [etapa, setEtapa] = useState(0);
   const [regalo, setRegalo] = useState(-1);
+
+  const codigoSecreto = "02082026"; // 👉 cámbialo aquí
 
   const opciones = [
     "Viaje sorpresa ✈️",
@@ -22,6 +26,51 @@ export default function App() {
     cursor: "pointer"
   };
 
+  // 🔐 PANTALLA DE ACCESO
+  if (!acceso) {
+    return (
+      <div style={{
+        textAlign: "center",
+        padding: "50px",
+        minHeight: "100vh",
+        background: "linear-gradient(to right, #6a11cb, #2575fc)",
+        color: "white"
+      }}>
+        <h1>🔐 Acceso Secreto 🔐</h1>
+
+        <p>Ingresa la palabra mágica 💖</p>
+
+        <input
+          value={codigo}
+          onChange={(e) => setCodigo(e.target.value)}
+          placeholder="Código secreto..."
+          style={{
+            padding: "10px",
+            borderRadius: "8px",
+            border: "none",
+            marginBottom: "10px"
+          }}
+        />
+
+        <br />
+
+        <button
+          style={botonStyle}
+          onClick={() => {
+            if (codigo.toLowerCase() === codigoSecreto) {
+              setAcceso(true);
+            } else {
+              alert("💔 Código incorrecto...");
+            }
+          }}
+        >
+          Entrar
+        </button>
+      </div>
+    );
+  }
+
+  // 🎉 CARTA
   return (
     <div style={{
       textAlign: "center",
