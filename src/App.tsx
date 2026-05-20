@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function App() {
   const [etapa, setEtapa] = useState(0);
   const [regalo, setRegalo] = useState(-1);
   const [showConfeti, setShowConfeti] = useState(false);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const opciones = [
     "Viaje sorpresa ✈️",
@@ -24,10 +26,14 @@ export default function App() {
     fontSize: "16px"
   };
 
-  // 🎆 Activar efectos al final
+  // 🎉 ACTIVAR EFECTOS
   useEffect(() => {
     if (etapa === 3) {
       setShowConfeti(true);
+
+      // reproducir música
+      audioRef.current?.play();
+
       setTimeout(() => setShowConfeti(false), 5000);
     }
   }, [etapa]);
@@ -43,59 +49,37 @@ export default function App() {
     }}>
       <h1>🎉 Feliz Cumpleaños 🎉</h1>
 
-      {/* 🎉 CONFETI + ✨ FUEGOS */}
-      {showConfeti && (
-        <>
-          {/* Confeti */}
-          <div style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none"
-          }}>
-            {Array.from({ length: 80 }).map((_, i) => (
-              <div
-                key={"confeti" + i}
-                style={{
-                  position: "absolute",
-                  top: "-10px",
-                  left: Math.random() * 100 + "%",
-                  width: "8px",
-                  height: "8px",
-                  backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`,
-                  animation: `fall ${Math.random() * 3 + 2}s linear infinite`
-                }}
-              />
-            ))}
-          </div>
+      {/* 🎵 AUDIO */}
+      <audio
+        ref={audioRef}
+        src="https://actions.google.com/sounds/v1/celebrations/fireworks.ogg"
+      />
 
-          {/* Fuegos artificiales */}
-          <div style={{
-            position: "fixed",
-            width: "100%",
-            height: "100%",
-            pointerEvents: "none"
-          }}>
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div
-                key={"fire" + i}
-                style={{
-                  position: "absolute",
-                  top: Math.random() * 80 + "%",
-                  left: Math.random() * 90 + "%",
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`,
-                  animation: `explode 1s ease-out forwards`,
-                  animationDelay: `${Math.random() * 2}s`
-                }}
-              />
-            ))}
-          </div>
-        </>
+      {/* 🎉 CONFETI */}
+      {showConfeti && (
+        <div style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          pointerEvents: "none"
+        }}>
+          {Array.from({ length: 80 }).map((_, i) => (
+            <div
+              key={i}
+              style={{
+                position: "absolute",
+                top: "-10px",
+                left: Math.random() * 100 + "%",
+                width: "8px",
+                height: "8px",
+                backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                animation: `fall ${Math.random() * 3 + 2}s linear infinite`
+              }}
+            />
+          ))}
+        </div>
       )}
 
       {/* Animaciones */}
@@ -105,17 +89,6 @@ export default function App() {
             0% { transform: translateY(0px); }
             100% { transform: translateY(100vh); }
           }
-
-          @keyframes explode {
-            0% {
-              transform: scale(0.5);
-              opacity: 1;
-            }
-            100% {
-              transform: scale(3);
-              opacity: 0;
-            }
-          }
         `}
       </style>
 
@@ -123,8 +96,7 @@ export default function App() {
         <>
           <p style={{ fontSize: "18px" }}>
             Hoy celebramos una persona increíble… 🌟  
-            Gracias por existir, por cada sonrisa y cada momento.  
-            Este es solo un pequeño detalle para recordarte lo especial que eres 💖
+            Gracias por existir y por cada momento compartido 💖
           </p>
 
           <div style={{ margin: "20px" }}>
@@ -174,8 +146,6 @@ export default function App() {
           <p style={{ fontSize: "20px" }}>
             Elegiste: <strong>{opciones[regalo]}</strong>
           </p>
-
-          <h3>Pero en realidad... 👀</h3>
 
           <p style={{
             fontSize: "22px",
