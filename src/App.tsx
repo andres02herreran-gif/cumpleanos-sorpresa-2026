@@ -21,7 +21,6 @@ export default function App() {
     border: "none",
     borderRadius: "25px",
     padding: "12px 24px",
-    margin: "10px",
     cursor: "pointer",
     fontSize: "16px"
   };
@@ -32,20 +31,20 @@ export default function App() {
     border: "none",
     borderRadius: "25px",
     padding: "12px 24px",
-    margin: "10px",
     cursor: "pointer",
     fontSize: "16px"
   };
 
   return (
-    <div style={{
-      textAlign: "center",
-      padding: "30px",
-      minHeight: "100vh",
-      background: "linear-gradient(to right, #fff1eb, #fcd5ce)",
-      fontFamily: "'Segoe UI', sans-serif"
-    }}>
-
+    <div
+      style={{
+        textAlign: "center",
+        padding: "30px",
+        minHeight: "100vh",
+        background: "linear-gradient(to right, #fff1eb, #fcd5ce)",
+        fontFamily: "'Segoe UI', sans-serif"
+      }}
+    >
       <h1 style={{ color: "#b5838d" }}>🎉 Feliz Cumpleaños 🎉</h1>
 
       {/* ETAPA 0 */}
@@ -62,9 +61,19 @@ export default function App() {
       {/* ETAPA 1 */}
       {etapa === 1 && (
         <>
-          <h2>¿Quieres aceptar este regalo? 🎁</h2>
+          <h2 style={{ marginTop: "20px" }}>
+            ¿Quieres aceptar este regalo? 🎁
+          </h2>
 
-          <div>
+          {/* CONTENEDOR DE BOTONES */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "20px",
+              marginTop: "20px"
+            }}
+          >
             {/* BOTÓN SI */}
             <button
               style={botonSi}
@@ -121,7 +130,7 @@ export default function App() {
           {opciones.map((o, i) => (
             <div key={i}>
               <button
-                style={botonSi}
+                style={{ ...botonSi, marginTop: "10px" }}
                 onClick={() => {
                   setRegalo(i);
                   setEtapa(4);
@@ -143,11 +152,13 @@ export default function App() {
             Elegiste: <strong>{opciones[regalo]}</strong>
           </p>
 
-          <p style={{
-            marginTop: "20px",
-            fontWeight: "bold",
-            color: "#b5838d"
-          }}>
+          <p
+            style={{
+              marginTop: "20px",
+              fontWeight: "bold",
+              color: "#b5838d"
+            }}
+          >
             💖 Todos los regalos son para ti 💖
           </p>
 
