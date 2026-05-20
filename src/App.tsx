@@ -1,12 +1,9 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
   const [etapa, setEtapa] = useState(0);
   const [regalo, setRegalo] = useState(-1);
-  const [showConfeti, setShowConfeti] = useState(false);
-
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [finalNetflix, setFinalNetflix] = useState(false);
 
   const opciones = [
     "Viaje sorpresa ✈️",
@@ -27,58 +24,54 @@ export default function App() {
     fontSize: "16px"
   };
 
-  // 🎬 Pantalla de entrada
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 2500);
-  }, []);
-
-  // 🎉 Activar efectos finales
+  // Activar final tipo Netflix después de unos segundos
   useEffect(() => {
     if (etapa === 3) {
-      setShowConfeti(true);
-      audioRef.current?.play();
-      setTimeout(() => setShowConfeti(false), 5000);
+      setTimeout(() => setFinalNetflix(true), 5000);
     }
   }, [etapa]);
 
-  // 🎬 PANTALLA DE CARGA
-  if (loading) {
+  // 🎬 FINAL TIPO NETFLIX
+  if (finalNetflix) {
     return (
       <div style={{
+        backgroundColor: "black",
+        color: "white",
         height: "100vh",
         display: "flex",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        flexDirection: "column",
-        background: "linear-gradient(to right, #6a11cb, #2575fc)",
-        color: "white"
+        textAlign: "center",
+        animation: "fadeIn 2s"
       }}>
         <h1 style={{
-          fontSize: "28px",
-          animation: "fade 2s infinite"
+          fontSize: "40px",
+          marginBottom: "20px"
         }}>
-          🎁 Preparando tu sorpresa...
+          🎬 FIN 🎬
         </h1>
 
-        <div style={{
+        <h2 style={{
+          fontSize: "28px",
+          maxWidth: "600px"
+        }}>
+          Esta historia apenas comienza... 💖
+        </h2>
+
+        <p style={{
           marginTop: "20px",
-          width: "50px",
-          height: "50px",
-          border: "5px solid white",
-          borderTop: "5px solid transparent",
-          borderRadius: "50%",
-          animation: "spin 1s linear infinite"
-        }} />
+          fontSize: "20px",
+          color: "#ff4d6d"
+        }}>
+          Porque lo mejor es vivirla contigo ✨
+        </p>
 
         <style>
           {`
-            @keyframes spin {
-              100% { transform: rotate(360deg); }
-            }
-
-            @keyframes fade {
-              0%, 100% { opacity: 1; }
-              50% { opacity: 0.4; }
+            @keyframes fadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
             }
           `}
         </style>
@@ -86,55 +79,14 @@ export default function App() {
     );
   }
 
-  // 🎉 CARTA PRINCIPAL
   return (
     <div style={{
       textAlign: "center",
       padding: "20px",
       minHeight: "100vh",
       background: "linear-gradient(to right, #ff9a9e, #fad0c4)",
-      fontFamily: "Arial",
-      overflow: "hidden"
+      fontFamily: "Arial"
     }}>
-
-      {/* 🎵 AUDIO */}
-      <audio ref={audioRef} src="https://actions.google.com/sounds/v1/celebrations/fireworks.ogg" />
-
-      {/* 🎉 CONFETI */}
-      {showConfeti && (
-        <div style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%"
-        }}>
-          {Array.from({ length: 80 }).map((_, i) => (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                top: "-10px",
-                left: Math.random() * 100 + "%",
-                width: "8px",
-                height: "8px",
-                backgroundColor: `hsl(${Math.random() * 360}, 100%, 50%)`,
-                animation: `fall ${Math.random() * 3 + 2}s linear infinite`
-              }}
-            />
-          ))}
-        </div>
-      )}
-
-      <style>
-        {`
-          @keyframes fall {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(100vh); }
-          }
-        `}
-      </style>
-
       <h1>🎉 Feliz Cumpleaños 🎉</h1>
 
       {etapa === 0 && (
@@ -144,10 +96,10 @@ export default function App() {
             Gracias por existir y por cada momento compartido 💖
           </p>
 
-          <div style={{ margin: "20px" }}>
-            <img src="https://picsum.photos/200" style={{ margin: "5px", borderRadius: "10px" }} />
-            <img src="https://picsum.photos/201" style={{ margin: "5px", borderRadius: "10px" }} />
-          </div>
+          <img src="https://picsum.photos/200" style={{ margin: "5px", borderRadius: "10px" }} />
+          <img src="https://picsum.photos/201" style={{ margin: "5px", borderRadius: "10px" }} />
+
+          <br /><br />
 
           <button style={botonStyle} onClick={() => setEtapa(1)}>
             Ver sorpresa 🎁
@@ -158,7 +110,9 @@ export default function App() {
       {etapa === 1 && (
         <>
           <h2>¿Quieres descubrir tu regalo? 🎁</h2>
-          <button style={botonStyle} onClick={() => setEtapa(2)}>Sí 💖</button>
+          <button style={botonStyle} onClick={() => setEtapa(2)}>
+            Sí 💖
+          </button>
         </>
       )}
 
@@ -198,16 +152,6 @@ export default function App() {
           }}>
             💖 El mejor regalo es compartir tiempo contigo 💖
           </p>
-
-          <ul style={{ textAlign: "left", maxWidth: "300px", margin: "auto" }}>
-            {opciones.map((o, i) => (
-              <li key={i}>🎁 {o}</li>
-            ))}
-          </ul>
-
-          <h2 style={{ marginTop: "25px" }}>
-            🎆 Feliz cumpleaños 🎆
-          </h2>
         </>
       )}
     </div>
