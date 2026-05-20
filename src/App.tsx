@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function App() {
   const [etapa, setEtapa] = useState(0);
+  const [acepto, setAcepto] = useState<null | boolean>(null);
   const [regalo, setRegalo] = useState(-1);
 
   const opciones = [
@@ -12,6 +13,8 @@ export default function App() {
     "Aventura juntos 🚗"
   ];
 
+  const URL = "https://script.google.com/macros/s/AKfycby_yxCgYVuRu2iPg7VprE86yovYDoNp7JW3ZC56zeCuoLKNmerdvHxYeDeg50fs5O9I/exec";
+
   const botonStyle = {
     backgroundColor: "#f8a5c2",
     color: "#fff",
@@ -19,9 +22,7 @@ export default function App() {
     borderRadius: "25px",
     padding: "12px 24px",
     margin: "8px",
-    cursor: "pointer",
-    fontSize: "15px",
-    boxShadow: "0px 4px 10px rgba(0,0,0,0.1)"
+    cursor: "pointer"
   };
 
   return (
@@ -29,144 +30,114 @@ export default function App() {
       textAlign: "center",
       padding: "30px",
       minHeight: "100vh",
-      background: "linear-gradient(to right, #fff1eb, #fcd5ce)",
-      fontFamily: "'Segoe UI', 'Poppins', sans-serif",
-      color: "#6d6875"
+      background: "linear-gradient(to right, #fff1eb, #fcd5ce)"
     }}>
 
-      <div className="fade">
+      <h1 style={{ color: "#b5838d" }}>🎉 Feliz Cumpleaños 🎉</h1>
 
-        <h1 style={{
-          fontSize: "36px",
-          color: "#b5838d",
-          marginBottom: "20px"
-        }}>
-          🎉 Feliz Cumpleaños 🎉
-        </h1>
+      {/* ETAPA 0 */}
+      {etapa === 0 && (
+        <>
+          <p>Hoy tengo algo especial para ti 💖</p>
 
-        {etapa === 0 && (
-          <>
-            <p style={{
-              fontSize: "18px",
-              lineHeight: "1.6",
-              maxWidth: "500px",
-              margin: "auto"
-            }}>
-              Hoy celebramos a una persona muy especial… 🌸  
-              Gracias por llenar todo de momentos bonitos, sonrisas y recuerdos únicos.  
-              Este pequeño detalle es para recordarte lo increíble que eres 💖
-            </p>
+          <button style={botonStyle} onClick={() => setEtapa(1)}>
+            Ver sorpresa ✨
+          </button>
+        </>
+      )}
 
-            <div style={{ marginTop: "25px" }}>
-              <img src="https://picsum.photos/200" style={{ borderRadius: "15px", margin: "6px" }} />
-              <img src="https://picsum.photos/201" style={{ borderRadius: "15px", margin: "6px" }} />
+      {/* ETAPA 1 */}
+      {etapa === 1 && (
+        <>
+          <h2>¿Quieres aceptar este regalo? 🎁</h2>
+
+          {/* BOTÓN SI */}
+          <button
+            style={botonStyle}
+            onClick={() => {
+              fetch(URL, {
+                method: "POST",
+                body: JSON.stringify({ respuesta: "SI" })
+              });
+
+              setAcepto(true);
+              setEtapa(2);
+            }}
+          >
+            Sí 💖
+          </button>
+
+          {/* BOTÓN NO */}
+          <button
+            style={botonStyle}
+            onClick={() => {
+              fetch(URL, {
+                method: "POST",
+                body: JSON.stringify({ respuesta: "NO" })
+              });
+
+              setAcepto(false);
+              setEtapa(3);
+            }}
+          >
+            No 😏
+          </button>
+        </>
+      )}
+
+      {/* SI DIJO NO */}
+      {etapa === 3 && (
+        <>
+          <h2>😏 Bueno...</h2>
+
+          <p>Entonces me quedo con todos los regalos 😂</p>
+
+          <button style={botonStyle} onClick={() => setEtapa(2)}>
+            Igual quiero verlos 👀
+          </button>
+        </>
+      )}
+
+      {/* OPCIONES */}
+      {etapa === 2 && (
+        <>
+          <h2>Elige una opción 👇</h2>
+
+          {opciones.map((o, i) => (
+            <div key={i}>
+              <button
+                style={botonStyle}
+                onClick={() => {
+                  setRegalo(i);
+                  setEtapa(4);
+                }}
+              >
+                Opción {i + 1}
+              </button>
             </div>
+          ))}
+        </>
+      )}
 
-            <button style={botonStyle} onClick={() => setEtapa(1)}>
-              Ver sorpresa ✨
-            </button>
-          </>
-        )}
+      {/* RESULTADO */}
+      {etapa === 4 && (
+        <>
+          <h2>🎉 Sorpresa 🎉</h2>
 
-        {etapa === 1 && (
-          <>
-            <h2 style={{ marginTop: "25px" }}>
-              ¿Quieres descubrir tu regalo? 🎁
-            </h2>
+          <p>
+            Elegiste: <strong>{opciones[regalo]}</strong>
+          </p>
 
-            <button style={botonStyle} onClick={() => setEtapa(2)}>
-              Sí, claro 💖
-            </button>
-          </>
-        )}
+          <p style={{ marginTop: "20px", fontWeight: "bold" }}>
+            💖 Todos los regalos son para ti 💖
+          </p>
 
-        {etapa === 2 && (
-          <>
-            <h2 style={{ marginTop: "25px" }}>
-              Elige una opción 👇
-            </h2>
+          <p style={{ marginTop: "15px", fontSize: "14px" }}>
+            Decisión registrada: {acepto ? "SÍ ✅" : "NO ❌"}
+          </p>
+        </>
+      )}
 
-            <div style={{ marginTop: "15px" }}>
-              {opciones.map((o, i) => (
-                <div key={i}>
-                  <button
-                    style={botonStyle}
-                    onClick={() => {
-                      setRegalo(i);
-                      setEtapa(3);
-                    }}
-                  >
-                    Opción {i + 1}
-                  </button>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {etapa === 3 && (
-          <>
-            <h2 style={{
-              color: "#b5838d",
-              marginTop: "25px"
-            }}>
-              ✨ Sorpresa ✨
-            </h2>
-
-            <p style={{
-              fontSize: "18px",
-              marginTop: "10px"
-            }}>
-              Elegiste: <strong>{opciones[regalo]}</strong>
-            </p>
-
-            <p style={{
-              fontSize: "20px",
-              marginTop: "20px",
-              fontWeight: "600",
-              color: "#9d8189"
-            }}>
-              Pero en realidad… 💫
-            </p>
-
-            <p style={{
-              fontSize: "22px",
-              fontWeight: "bold",
-              marginTop: "10px",
-              color: "#b5838d"
-            }}>
-              💖 Todos los momentos contigo son el mejor regalo 💖
-            </p>
-
-            <p style={{
-              marginTop: "15px",
-              fontSize: "16px"
-            }}>
-              Y esto apenas comienza ✨
-            </p>
-
-            <h2 style={{
-              marginTop: "30px",
-              color: "#b5838d"
-            }}>
-              🎉 Feliz cumpleaños 🎉
-            </h2>
-          </>
-        )}
-
-      </div>
-
-      {/* TRANSICIÓN SUAVE */}
-      <style>{`
-        .fade {
-          animation: fadeIn 0.8s ease;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }
