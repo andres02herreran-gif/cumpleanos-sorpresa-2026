@@ -24,57 +24,47 @@ export default function App() {
     fontSize: "16px"
   };
 
-  // Activar final tipo Netflix después de unos segundos
   useEffect(() => {
     if (etapa === 3) {
       setTimeout(() => setFinalNetflix(true), 5000);
     }
   }, [etapa]);
 
-  // 🎬 FINAL TIPO NETFLIX
+  // 🎬 FINAL NETFLIX
   if (finalNetflix) {
     return (
-      <div style={{
-        backgroundColor: "black",
-        color: "white",
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        animation: "fadeIn 2s"
-      }}>
-        <h1 style={{
-          fontSize: "40px",
-          marginBottom: "20px"
+      <div className="fade">
+        <div style={{
+          backgroundColor: "black",
+          color: "white",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center"
         }}>
-          🎬 FIN 🎬
-        </h1>
+          <h1 style={{ fontSize: "40px" }}>🎬 FIN 🎬</h1>
 
-        <h2 style={{
-          fontSize: "28px",
-          maxWidth: "600px"
-        }}>
-          Esta historia apenas comienza... 💖
-        </h2>
+          <h2 style={{ fontSize: "28px", marginTop: "20px" }}>
+            Esta historia apenas comienza... 💖
+          </h2>
 
-        <p style={{
-          marginTop: "20px",
-          fontSize: "20px",
-          color: "#ff4d6d"
-        }}>
-          Porque lo mejor es vivirla contigo ✨
-        </p>
+          <p style={{ marginTop: "20px", color: "#ff4d6d" }}>
+            Porque lo mejor es vivirla contigo ✨
+          </p>
+        </div>
 
-        <style>
-          {`
-            @keyframes fadeIn {
-              from { opacity: 0; }
-              to { opacity: 1; }
-            }
-          `}
-        </style>
+        <style>{`
+          .fade {
+            animation: fadeIn 1.5s ease;
+          }
+
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+        `}</style>
       </div>
     );
   }
@@ -87,73 +77,82 @@ export default function App() {
       background: "linear-gradient(to right, #ff9a9e, #fad0c4)",
       fontFamily: "Arial"
     }}>
-      <h1>🎉 Feliz Cumpleaños 🎉</h1>
 
-      {etapa === 0 && (
-        <>
-          <p style={{ fontSize: "18px" }}>
-            Hoy celebramos una persona increíble… 🌟  
-            Gracias por existir y por cada momento compartido 💖
-          </p>
+      <div className="fade">
+        <h1>🎉 Feliz Cumpleaños 🎉</h1>
 
-          <img src="https://picsum.photos/200" style={{ margin: "5px", borderRadius: "10px" }} />
-          <img src="https://picsum.photos/201" style={{ margin: "5px", borderRadius: "10px" }} />
+        {etapa === 0 && (
+          <>
+            <p>
+              Hoy celebramos una persona increíble… 🌟  
+              Gracias por existir y por cada momento compartido 💖
+            </p>
 
-          <br /><br />
+            <img src="https://picsum.photos/200" />
+            <img src="https://picsum.photos/201" />
 
-          <button style={botonStyle} onClick={() => setEtapa(1)}>
-            Ver sorpresa 🎁
-          </button>
-        </>
-      )}
+            <br /><br />
 
-      {etapa === 1 && (
-        <>
-          <h2>¿Quieres descubrir tu regalo? 🎁</h2>
-          <button style={botonStyle} onClick={() => setEtapa(2)}>
-            Sí 💖
-          </button>
-        </>
-      )}
+            <button style={botonStyle} onClick={() => setEtapa(1)}>
+              Ver sorpresa 🎁
+            </button>
+          </>
+        )}
 
-      {etapa === 2 && (
-        <>
-          <h2>Elige una opción 👇</h2>
+        {etapa === 1 && (
+          <>
+            <h2>¿Quieres descubrir tu regalo? 🎁</h2>
+            <button style={botonStyle} onClick={() => setEtapa(2)}>
+              Sí 💖
+            </button>
+          </>
+        )}
 
-          {opciones.map((o, i) => (
-            <div key={i}>
-              <button
-                style={botonStyle}
-                onClick={() => {
-                  setRegalo(i);
-                  setEtapa(3);
-                }}
-              >
-                Opción {i + 1}
-              </button>
-            </div>
-          ))}
-        </>
-      )}
+        {etapa === 2 && (
+          <>
+            <h2>Elige una opción 👇</h2>
 
-      {etapa === 3 && (
-        <>
-          <h2 style={{ color: "#ff4d6d" }}>🎉 ¡Sorpresa! 🎉</h2>
+            {opciones.map((o, i) => (
+              <div key={i}>
+                <button
+                  style={botonStyle}
+                  onClick={() => {
+                    setRegalo(i);
+                    setEtapa(3);
+                  }}
+                >
+                  Opción {i + 1}
+                </button>
+              </div>
+            ))}
+          </>
+        )}
 
-          <p style={{ fontSize: "20px" }}>
-            Elegiste: <strong>{opciones[regalo]}</strong>
-          </p>
+        {etapa === 3 && (
+          <>
+            <h2 style={{ color: "#ff4d6d" }}>🎉 ¡Sorpresa! 🎉</h2>
 
-          <p style={{
-            fontSize: "22px",
-            fontWeight: "bold",
-            color: "#ff4d6d",
-            marginTop: "20px"
-          }}>
-            💖 El mejor regalo es compartir tiempo contigo 💖
-          </p>
-        </>
-      )}
+            <p>
+              Elegiste: <strong>{opciones[regalo]}</strong>
+            </p>
+
+            <p style={{ marginTop: "20px", fontWeight: "bold" }}>
+              💖 El mejor regalo es compartir tiempo contigo 💖
+            </p>
+          </>
+        )}
+      </div>
+
+      <style>{`
+        .fade {
+          animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(15px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
     </div>
   );
 }
