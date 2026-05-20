@@ -12,24 +12,40 @@ export default function App() {
     "Aventura juntos 🚗"
   ];
 
+  const botonStyle = {
+    backgroundColor: "#ff4d6d",
+    color: "white",
+    border: "none",
+    borderRadius: "10px",
+    padding: "10px 20px",
+    margin: "5px",
+    cursor: "pointer"
+  };
+
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
+    <div style={{
+      textAlign: "center",
+      padding: "20px",
+      minHeight: "100vh",
+      background: "linear-gradient(to right, #ff9a9e, #fad0c4)",
+      fontFamily: "Arial"
+    }}>
       <h1>🎉 Feliz Cumpleaños 🎉</h1>
 
       {etapa === 0 && (
         <>
           <p>
-          Hoy celebramos una persona increíble… 🌟  
-          Gracias por existir, por cada sonrisa y cada momento.  
-          Este es solo un pequeño detalle para recordarte lo especial que eres 💖
+            Hoy celebramos una persona increíble… 🌟  
+            Gracias por existir, por cada sonrisa y cada momento.  
+            Este es solo un pequeño detalle para recordarte lo especial que eres 💖
           </p>
 
-          <img src="https://picsum.photos/200" />
-          <img src="https://picsum.photos/201" />
+          <div style={{ margin: "20px" }}>
+            <img src="https://picsum.photos/200" style={{ margin: "5px", borderRadius: "10px" }} />
+            <img src="https://picsum.photos/201" style={{ margin: "5px", borderRadius: "10px" }} />
+          </div>
 
-          <br /><br />
-
-          <button onClick={() => setEtapa(1)}>
+          <button style={botonStyle} onClick={() => setEtapa(1)}>
             Ver sorpresa 🎁
           </button>
         </>
@@ -37,8 +53,8 @@ export default function App() {
 
       {etapa === 1 && (
         <>
-          <h2>¿Quieres un regalo?</h2>
-          <button onClick={() => setEtapa(2)}>Sí</button>
+          <h2>¿Quieres descubrir tu regalo? 🎁</h2>
+          <button style={botonStyle} onClick={() => setEtapa(2)}>Sí 💖</button>
         </>
       )}
 
@@ -48,10 +64,13 @@ export default function App() {
 
           {opciones.map((o, i) => (
             <div key={i}>
-              <button onClick={() => {
-                setRegalo(i);
-                setEtapa(3);
-              }}>
+              <button
+                style={botonStyle}
+                onClick={() => {
+                  setRegalo(i);
+                  setEtapa(3);
+                }}
+              >
                 Opción {i + 1}
               </button>
             </div>
@@ -61,15 +80,23 @@ export default function App() {
 
       {etapa === 3 && (
         <>
-          <h2>🎉 ¡Elegiste! 🎉</h2>
-          <p>{opciones[regalo]}</p>
+          <h2 style={{ color: "#ff4d6d" }}>🎉 ¡Elegiste! 🎉</h2>
 
-          <h3>Pero todas eran 👀</h3>
-          <ul>
+          <p style={{ fontSize: "20px" }}>
+            Tu regalo es: <strong>{opciones[regalo]}</strong>
+          </p>
+
+          <h3>Pero estas eran todas 👀</h3>
+
+          <ul style={{ textAlign: "left", maxWidth: "300px", margin: "auto" }}>
             {opciones.map((o, i) => (
               <li key={i}>🎁 {o}</li>
             ))}
           </ul>
+
+          <h2 style={{ marginTop: "20px", color: "#ff4d6d" }}>
+            💖 Pero el mejor regalo... eres tú 💖
+          </h2>
         </>
       )}
     </div>
