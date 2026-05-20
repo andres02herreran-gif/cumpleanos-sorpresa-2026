@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
   const [etapa, setEtapa] = useState(0);
   const [regalo, setRegalo] = useState(-1);
   const [showConfeti, setShowConfeti] = useState(false);
@@ -26,18 +27,66 @@ export default function App() {
     fontSize: "16px"
   };
 
-  // 🎉 ACTIVAR EFECTOS
+  // 🎬 Pantalla de entrada
+  useEffect(() => {
+    setTimeout(() => setLoading(false), 2500);
+  }, []);
+
+  // 🎉 Activar efectos finales
   useEffect(() => {
     if (etapa === 3) {
       setShowConfeti(true);
-
-      // reproducir música
       audioRef.current?.play();
-
       setTimeout(() => setShowConfeti(false), 5000);
     }
   }, [etapa]);
 
+  // 🎬 PANTALLA DE CARGA
+  if (loading) {
+    return (
+      <div style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
+        background: "linear-gradient(to right, #6a11cb, #2575fc)",
+        color: "white"
+      }}>
+        <h1 style={{
+          fontSize: "28px",
+          animation: "fade 2s infinite"
+        }}>
+          🎁 Preparando tu sorpresa...
+        </h1>
+
+        <div style={{
+          marginTop: "20px",
+          width: "50px",
+          height: "50px",
+          border: "5px solid white",
+          borderTop: "5px solid transparent",
+          borderRadius: "50%",
+          animation: "spin 1s linear infinite"
+        }} />
+
+        <style>
+          {`
+            @keyframes spin {
+              100% { transform: rotate(360deg); }
+            }
+
+            @keyframes fade {
+              0%, 100% { opacity: 1; }
+              50% { opacity: 0.4; }
+            }
+          `}
+        </style>
+      </div>
+    );
+  }
+
+  // 🎉 CARTA PRINCIPAL
   return (
     <div style={{
       textAlign: "center",
@@ -47,13 +96,9 @@ export default function App() {
       fontFamily: "Arial",
       overflow: "hidden"
     }}>
-      <h1>🎉 Feliz Cumpleaños 🎉</h1>
 
       {/* 🎵 AUDIO */}
-      <audio
-        ref={audioRef}
-        src="https://actions.google.com/sounds/v1/celebrations/fireworks.ogg"
-      />
+      <audio ref={audioRef} src="https://actions.google.com/sounds/v1/celebrations/fireworks.ogg" />
 
       {/* 🎉 CONFETI */}
       {showConfeti && (
@@ -62,8 +107,7 @@ export default function App() {
           top: 0,
           left: 0,
           width: "100%",
-          height: "100%",
-          pointerEvents: "none"
+          height: "100%"
         }}>
           {Array.from({ length: 80 }).map((_, i) => (
             <div
@@ -82,7 +126,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Animaciones */}
       <style>
         {`
           @keyframes fall {
@@ -91,6 +134,8 @@ export default function App() {
           }
         `}
       </style>
+
+      <h1>🎉 Feliz Cumpleaños 🎉</h1>
 
       {etapa === 0 && (
         <>
@@ -113,9 +158,7 @@ export default function App() {
       {etapa === 1 && (
         <>
           <h2>¿Quieres descubrir tu regalo? 🎁</h2>
-          <button style={botonStyle} onClick={() => setEtapa(2)}>
-            Sí 💖
-          </button>
+          <button style={botonStyle} onClick={() => setEtapa(2)}>Sí 💖</button>
         </>
       )}
 
