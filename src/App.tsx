@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function App() {
   const [etapa, setEtapa] = useState(0);
   const [regalo, setRegalo] = useState(-1);
-  const [finalNetflix, setFinalNetflix] = useState(false);
 
   const opciones = [
     "Viaje sorpresa ✈️",
@@ -24,51 +23,6 @@ export default function App() {
     fontSize: "16px"
   };
 
-  useEffect(() => {
-    if (etapa === 3) {
-      setTimeout(() => setFinalNetflix(true), 5000);
-    }
-  }, [etapa]);
-
-  // 🎬 FINAL NETFLIX
-  if (finalNetflix) {
-    return (
-      <div className="fade">
-        <div style={{
-          backgroundColor: "black",
-          color: "white",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          textAlign: "center"
-        }}>
-          <h1 style={{ fontSize: "40px" }}>🎬 FIN 🎬</h1>
-
-          <h2 style={{ fontSize: "28px", marginTop: "20px" }}>
-            Esta historia apenas comienza... 💖
-          </h2>
-
-          <p style={{ marginTop: "20px", color: "#ff4d6d" }}>
-            Porque lo mejor es vivirla contigo ✨
-          </p>
-        </div>
-
-        <style>{`
-          .fade {
-            animation: fadeIn 1.5s ease;
-          }
-
-          @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
-      </div>
-    );
-  }
-
   return (
     <div style={{
       textAlign: "center",
@@ -79,11 +33,12 @@ export default function App() {
     }}>
 
       <div className="fade">
+
         <h1>🎉 Feliz Cumpleaños 🎉</h1>
 
         {etapa === 0 && (
           <>
-            <p>
+            <p style={{ fontSize: "18px" }}>
               Hoy celebramos una persona increíble… 🌟  
               Gracias por existir y por cada momento compartido 💖
             </p>
@@ -132,17 +87,32 @@ export default function App() {
           <>
             <h2 style={{ color: "#ff4d6d" }}>🎉 ¡Sorpresa! 🎉</h2>
 
-            <p>
+            <p style={{ fontSize: "20px" }}>
               Elegiste: <strong>{opciones[regalo]}</strong>
             </p>
 
-            <p style={{ marginTop: "20px", fontWeight: "bold" }}>
+            <p style={{
+              fontSize: "22px",
+              fontWeight: "bold",
+              color: "#ff4d6d",
+              marginTop: "20px"
+            }}>
               💖 El mejor regalo es compartir tiempo contigo 💖
             </p>
+
+            <p style={{ marginTop: "10px" }}>
+              Y lo mejor… apenas comienza 😏✨
+            </p>
+
+            <h2 style={{ marginTop: "25px" }}>
+              🎉 Feliz cumpleaños 🎉
+            </h2>
           </>
         )}
+
       </div>
 
+      {/* TRANSICIÓN SUAVE */}
       <style>{`
         .fade {
           animation: fadeIn 0.8s ease;
@@ -153,6 +123,7 @@ export default function App() {
           to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
+
     </div>
   );
 }
